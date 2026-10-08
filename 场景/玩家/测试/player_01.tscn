@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cbv7kqcfadqmk"]
+
+[ext_resource type="Script" uid="uid://dhgk4xwciwwgb" path="res://场景/玩家/测试/脚本/player_01.gd" id="1_xd3yc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qi2q2"]
+radius = 0.49853516
+
+[node name="Player_01" type="CharacterBody3D" unique_id=92791387]
+script = ExtResource("1_xd3yc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1540020371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qi2q2")
+
+[node name="Camera" type="Node3D" parent="." unique_id=224154622]
+
+[node name="subject" type="Node3D" parent="Camera" unique_id=2038535165]
+
+[node name="Camera3D" type="Camera3D" parent="Camera/subject" unique_id=1285239608]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)

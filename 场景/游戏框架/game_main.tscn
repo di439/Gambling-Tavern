@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b1mic80bgpwtk"]
+
+[node name="game_main" type="Node3D" unique_id=1320159426]
+
+[node name="TotalSpawn" type="Node3D" parent="." unique_id=707078011]
+
+[node name="PlayerSpawn" type="Marker3D" parent="TotalSpawn" unique_id=1461185853]
+
+[node name="EnemySpawn" type="Marker3D" parent="TotalSpawn" unique_id=965195481]
+
+[node name="GunSpawn" type="Marker3D" parent="TotalSpawn" unique_id=1379900323]
+
+[node name="GameManager" type="Node3D" parent="." unique_id=816992159]
