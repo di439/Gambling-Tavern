@@ -5,6 +5,8 @@ extends CharacterBody3D
 @onready var subject: Node3D = $Camera/subject
 @onready var camera: Camera3D = $Camera/subject/Camera3D
 
+@onready var state_machine: StateMachine = $StateMachine
+
 @export_group("移动")
 @export var walk_speed := 3.0
 @export var run_speed := 5.0
@@ -54,15 +56,12 @@ func _input(event: InputEvent) -> void:
 		target_pitch -= event.relative.y * mouse_sensitivity
 		target_pitch = clamp(target_pitch, -PI/3, PI/3)
 
+func _physics_process(delta: float) -> void:
+	pass
+
 func _process(delta: float) -> void:
 	update_view(delta)
 	apply_camera_motion(delta)
-
-func _physics_process(delta: float) -> void:
-	update_move_input()
-	update_velocity(delta)
-	apply_gravity(delta)
-	move_and_slide()
 
 func update_view(delta: float) -> void:
 	camera_rig.rotation.y = lerp_angle(camera_rig.rotation.y, target_yaw, delta * view_smoothing)
@@ -86,6 +85,12 @@ func update_velocity(delta: float) -> void:
 func apply_gravity(delta: float) -> void:
 	var gravity := jump_gravity if velocity.y > 0 else fall_gravity
 	velocity.y -= gravity * delta
+
+func do_move(delta: float) -> void:
+	update_move_input()
+	update_velocity(delta)
+	apply_gravity(delta)
+	move_and_slide()
 
 func apply_camera_motion(delta: float) -> void:
 	subject.position -= current_offset

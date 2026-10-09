@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://8h47d25ku5nb"]
 
 [ext_resource type="Texture2D" uid="uid://cxc33i0wdtue7" path="res://资产库/模型贴图/贴图_测试墙壁地板.png" id="1_cyxgx"]
+[ext_resource type="Script" uid="uid://dysa3602m5jn0" path="res://自定义/Node3d/level关卡类.gd" id="1_fsg0f"]
 [ext_resource type="PackedScene" uid="uid://cbv7kqcfadqmk" path="res://场景/玩家/测试/player_01.tscn" id="2_s1eof"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tgjsf"]
@@ -59,7 +60,14 @@ background_mode = 2
 sky = SubResource("Sky_fsg0f")
 glow_enabled = true
 
-[node name="world" type="Node3D" unique_id=440405101]
+[node name="world" type="Node3D" unique_id=440405101 node_paths=PackedStringArray("birth_point")]
+script = ExtResource("1_fsg0f")
+id_name = &"test_room"
+birth_point = NodePath("spawn")
+player_scene = ExtResource("2_s1eof")
+
+[node name="spawn" type="Marker3D" parent="." unique_id=861727052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.082463, 1.7888688, -6.611846)
 
 [node name="scene" type="Node3D" parent="." unique_id=1282216333]
 
@@ -134,5 +142,6 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="environment" unique_id=225629239]
 environment = SubResource("Environment_hbu3i")
 
-[node name="Player_01" parent="." unique_id=92791387 instance=ExtResource("2_s1eof")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, -7)
+[node name="interaction" type="Node" parent="." unique_id=518131347]
+
+[node name="Play_ui" type="Node3D" parent="interaction" unique_id=826819659]

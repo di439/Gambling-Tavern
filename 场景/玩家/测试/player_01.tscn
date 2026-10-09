@@ -1,14 +1,45 @@
 [gd_scene format=3 uid="uid://cbv7kqcfadqmk"]
 
 [ext_resource type="Script" uid="uid://dhgk4xwciwwgb" path="res://场景/玩家/测试/脚本/player_01.gd" id="1_xd3yc"]
+[ext_resource type="Script" uid="uid://c6o7dgfvceoql" path="res://自定义/StateMachine/StateMachine状态机类.gd" id="2_cy8ih"]
+[ext_resource type="Script" uid="uid://c8kvebesye612" path="res://状态机脚本/玩家/移动.gd" id="3_1nmwu"]
+[ext_resource type="Script" uid="uid://ba725upfow8y2" path="res://状态机脚本/玩家/游玩.gd" id="4_2hkyj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qi2q2"]
 radius = 0.49853516
 
+[sub_resource type="GDScript" id="GDScript_qi2q2"]
+resource_name = "检测面板数据"
+script/source = "extends Panel
+
+@export var target: Node              # 要监视的玩家
+@onready var data_label: Label = $data
+@onready var time_label: Label = $test_time
+@onready var timer: Timer = $data_updating
+
+var elapsed := 0.0
+
+func _ready() -> void:
+	timer.timeout.connect(_update)
+	timer.start()
+
+func _update() -> void:
+	# 时间
+	elapsed += timer.wait_time
+	time_label.text = \"时间：%.1f 秒\" % elapsed
+	
+	# 状态
+	if target and target.state_machine:
+		var state_name = target.state_machine.get_state_name()
+		data_label.text = \"状态：%s\" % state_name
+	else:
+		data_label.text = \"状态：未知\"
+"
+
 [node name="Player_01" type="CharacterBody3D" unique_id=92791387]
 script = ExtResource("1_xd3yc")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1540020371]
+[node name="collision" type="CollisionShape3D" parent="." unique_id=1540020371]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_qi2q2")
 
@@ -18,3 +49,57 @@ shape = SubResource("CapsuleShape3D_qi2q2")
 
 [node name="Camera3D" type="Camera3D" parent="Camera/subject" unique_id=1285239608]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="StateMachine" type="Node" parent="." unique_id=950774188 node_paths=PackedStringArray("owner_node")]
+unique_name_in_owner = true
+script = ExtResource("2_cy8ih")
+owner_node = NodePath("..")
+
+[node name="Move" type="Node" parent="StateMachine" unique_id=2083019448]
+script = ExtResource("3_1nmwu")
+state_name = &"move"
+
+[node name="Play" type="Node" parent="StateMachine" unique_id=2035221648]
+script = ExtResource("4_2hkyj")
+
+[node name="Detection_panel" type="Panel" parent="." unique_id=147422289 node_paths=PackedStringArray("target")]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_left = 0.864
+anchor_top = 0.020000001
+anchor_right = 0.98800004
+anchor_bottom = 0.095000006
+offset_right = 0.5599365
+offset_bottom = 0.39998627
+script = SubResource("GDScript_qi2q2")
+target = NodePath("..")
+
+[node name="data" type="Label" parent="Detection_panel" unique_id=1932764399]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.014
+anchor_top = 0.057000004
+anchor_right = 0.26500002
+anchor_bottom = 0.34
+offset_left = 0.77903485
+offset_top = -0.23980045
+offset_right = -0.11961365
+offset_bottom = -0.27599907
+text = "数据"
+
+[node name="test_time" type="Label" parent="Detection_panel" unique_id=482269927]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41300002
+anchor_top = 0.717
+anchor_right = 0.587
+anchor_bottom = 1.0
+offset_left = -0.038368225
+offset_top = 0.036197662
+offset_right = 0.038360596
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="data_updating" type="Timer" parent="Detection_panel" unique_id=298905673]
+wait_time = 0.2
+autostart = true
