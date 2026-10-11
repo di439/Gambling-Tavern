@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://wmoauld42qhs"]
+
+[ext_resource type="Script" uid="uid://yrtaw0axqc84" path="res://自定义/Weapons/weapon_data武器数据基类.gd" id="1_jybpx"]
+
+[resource]
+script = ExtResource("1_jybpx")
+weapon_name = "左轮"
+metadata/_custom_type_script = "uid://yrtaw0axqc84"

@@ -2,7 +2,7 @@
 class_name MoveState  extends State
 
 func _enter() -> void:
-	print("进入移动状态")
+	Log.print_line("进入移动状态")
 
 func _physics_running(delta: float) -> void:
 	user.do_move(delta)

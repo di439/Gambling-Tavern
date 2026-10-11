@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://cxc33i0wdtue7" path="res://资产库/模型贴图/贴图_测试墙壁地板.png" id="1_cyxgx"]
 [ext_resource type="Script" uid="uid://dysa3602m5jn0" path="res://自定义/Node3d/level关卡类.gd" id="1_fsg0f"]
 [ext_resource type="PackedScene" uid="uid://cbv7kqcfadqmk" path="res://场景/玩家/测试/player_01.tscn" id="2_s1eof"]
+[ext_resource type="PackedScene" uid="uid://dxwcydjgruqpr" path="res://场景/敌人/enemy_01.tscn" id="3_f1exd"]
+[ext_resource type="PackedScene" uid="uid://j1vdbemvioqc" path="res://场景/游戏框架/游玩框架.tscn" id="4_hbu3i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tgjsf"]
 resource_local_to_scene = true
@@ -60,11 +62,14 @@ background_mode = 2
 sky = SubResource("Sky_fsg0f")
 glow_enabled = true
 
-[node name="world" type="Node3D" unique_id=440405101 node_paths=PackedStringArray("birth_point")]
+[node name="world" type="Node3D" unique_id=440405101 node_paths=PackedStringArray("birth_point", "game_framework", "enemy_position")]
 script = ExtResource("1_fsg0f")
 id_name = &"test_room"
 birth_point = NodePath("spawn")
 player_scene = ExtResource("2_s1eof")
+game_framework = NodePath("游玩框架")
+enemy_scene = ExtResource("3_f1exd")
+enemy_position = NodePath("游玩框架/敌人/敌人_01")
 
 [node name="spawn" type="Marker3D" parent="." unique_id=861727052]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.082463, 1.7888688, -6.611846)
@@ -145,3 +150,13 @@ environment = SubResource("Environment_hbu3i")
 [node name="interaction" type="Node" parent="." unique_id=518131347]
 
 [node name="Play_ui" type="Node3D" parent="interaction" unique_id=826819659]
+
+[node name="游玩框架" parent="." unique_id=1997648627 instance=ExtResource("4_hbu3i")]
+
+[node name="玩家" parent="游玩框架" index="0" unique_id=1375930653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5855136, -4.214555)
+
+[node name="敌人" parent="游玩框架" index="1" unique_id=1306107350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56526625, 4.1320066)
+
+[editable path="游玩框架"]

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://pj7t3fi7ppab"]
+
+[ext_resource type="Script" uid="uid://kv7fc6nvu1m4" path="res://场景/武器/脚本/脚本_gun.gd" id="1_piaur"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qi2q2"]
+size = Vector3(1, 0.31274414, 1)
+
+[node name="gun" type="Area3D" unique_id=540309689]
+script = ExtResource("1_piaur")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1040348535]
+shape = SubResource("BoxShape3D_qi2q2")

@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://n7qxvulbuh5q" path="res://icon.svg" id="1_4cya7"]
 [ext_resource type="Shader" uid="uid://y2uqmeiq21bb" path="res://着色器/高斯模糊.gdshader" id="2_ulvh5"]
+[ext_resource type="Script" uid="uid://cy5gjukbun50r" path="res://场景/操作界面/脚本/脚本_选关.gd" id="3_ulvh5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qi2q2"]
 resource_local_to_scene = true
@@ -15,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_ulvh5")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=154446894]
 visible = false
@@ -30,12 +32,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="." unique_id=109396247]
+[node name="选关" type="HBoxContainer" parent="." unique_id=1713831303]
+unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -346.0
+anchors_preset = -1
+anchor_left = 0.003
+anchor_top = 0.70400006
+anchor_right = 0.99700004
+anchor_bottom = 0.9710001
+offset_left = 0.23999977
+offset_top = -0.32006836
+offset_right = -0.2401123
+offset_bottom = 0.3199463
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="level1" type="Button" parent="选关" unique_id=145591214]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 2
+size_flags_horizontal = 6
+text = "level1"
+icon = ExtResource("1_4cya7")

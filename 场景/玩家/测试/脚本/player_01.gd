@@ -1,11 +1,12 @@
-class_name Player
-extends CharacterBody3D
+class_name Player  extends Combatant
 
 @onready var camera_rig: Node3D = $Camera
 @onready var subject: Node3D = $Camera/subject
 @onready var camera: Camera3D = $Camera/subject/Camera3D
 
 @onready var state_machine: StateMachine = $StateMachine
+
+@onready var level_select = $选关
 
 @export_group("移动")
 @export var walk_speed := 3.0
@@ -44,12 +45,31 @@ var bob_time := 0.0
 var current_offset := Vector3.ZERO
 var current_rot := Vector3.ZERO
 
+var ui_open := false
+
+signal level_chosen(level_id: StringName)
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	level_select.level_chosen.connect(_on_level_chosen)
+	var game_flow = get_tree().get_first_node_in_group("game_flow")
+	if game_flow:
+		game_flow.turn_changed.connect(_on_turn_changed)
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("exit"):
 		get_tree().quit()
+		return
+	if state_machine.get_state_name() == "move":
+		if Input.is_action_just_pressed("ui_accept"):
+			ui_open = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			level_select.show()
+		elif Input.is_action_just_released("ui_accept"):
+			ui_open = false
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			level_select.hide()
+	if ui_open:
 		return
 	if event is InputEventMouseMotion:
 		target_yaw -= event.relative.x * mouse_sensitivity
@@ -124,3 +144,17 @@ func calculate_bob_rot(delta: float) -> Vector3:
 	bob_time += delta * speed * 0.5
 	var phase := bob_time * bob_frequency * TAU
 	return Vector3(sin(phase) * bob_pitch, 0, cos(phase * 0.5) * bob_tilt)
+
+func _on_level_chosen(level_id: StringName) -> void:
+	ui_open = false
+	level_select.hide()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	level_chosen.emit(level_id)
+
+func _on_turn_changed(turn) -> void:
+	if turn == 0:      # PLAYER
+		if state_machine.get_state_name() == "wait":
+			state_machine.change_state("play")
+	else:              # ENEMY
+		if state_machine.get_state_name() == "play":
+			state_machine.change_state("wait")

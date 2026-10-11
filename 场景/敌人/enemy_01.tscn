@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dxwcydjgruqpr"]
+
+[ext_resource type="Script" uid="uid://daylxencllx6q" path="res://场景/敌人/脚本/脚本_enemy_01.gd" id="1_yqyi0"]
+[ext_resource type="Texture2D" uid="uid://n7qxvulbuh5q" path="res://icon.svg" id="2_1ax83"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qi2q2"]
+radius = 0.4658203
+
+[node name="enemy_01" type="CharacterBody3D" unique_id=1717241827]
+script = ExtResource("1_yqyi0")
+
+[node name="碰撞箱" type="CollisionShape3D" parent="." unique_id=2099666016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qi2q2")
+
+[node name="立绘" type="Sprite3D" parent="." unique_id=1093205210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.415247, 0.42116594)
+texture = ExtResource("2_1ax83")

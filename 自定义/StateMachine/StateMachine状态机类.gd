@@ -16,7 +16,7 @@ var current_state: State:
 		
 		if current_state:
 			if debug and current_state.exit_message:
-				print(current_state.exit_message)
+				Log.print_line(current_state.exit_message)
 			current_state.running = false
 			current_state._exit()
 		
@@ -26,7 +26,7 @@ var current_state: State:
 		current_state._enter()
 		
 		if debug and current_state.enter_message:
-			print(current_state.enter_message)
+			Log.print_line(current_state.enter_message)
 		
 		state_changed.emit(old, current_state)
 
@@ -58,7 +58,7 @@ func change_state(name: StringName) -> bool:
 				return true
 			else:
 				if debug:
-					print("状态 %s 拒绝进入" % name)
+					Log.print_line("状态 %s 拒绝进入" % name)
 				return false
 	return false
 
